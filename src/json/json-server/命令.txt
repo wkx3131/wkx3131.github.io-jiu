@@ -1,0 +1,48 @@
+json-server --watch db.json启动某文件
+json-server --h 显示命令
+
+get查看 post上传(只能在数组内添加对象会覆盖)
+
+http://localhost:3000/comm?_page=2&_limit=3 获取的第二页的数据，每三行一页
+
+http://localhost:3000/comm?_sort=id&_order=asc 排序，标记( _sort )排序规则( _order）
+升序(asc)和降序(desc)
+
+http://localhost:3000/comments?_sort=postId,id&_order=asc,desc 多个排序规则
+
+http://localhost:3000/comm?_start=2&_limit=4
+_start：开始位置（下标，从0开始）
+_end：结束位置
+_limit：片段长度
+
+http://localhost:3000/comm?id_gte=4
+大于等于 _gte  小于等于 _lte 不等于 _ne  可以一起使用&
+
+http://localhost:3000/comm?id_like=1
+_like 模糊查询 指定字段
+http://localhost:3000/comm?q=1
+q 全局查询 全部字段
+
+http://localhost:3000/posts/1/comments 外键关联查询 postId自动连接id
+
+
+json-server 配资静态资源的默认方式是在根目录下创建 public 文件夹，然后里面放入静态资源。
+但如果你不想使用 public 作为静态资源的文件夹，也可以自己起过另一个名字，然后在启动环境时使用 --static 来指定目标目录就行了。
+比如我创建了一个 some-other-dir 作为静态资源的目录，使用以下命令指定以下即可。
+json-server db.json --static ./some-other-dir
+
+http://localhost:3000/ 后面跟着 静态资源名称 即可
+
+module.exports = () => {        快速生成数据，把对象。。
+  const data = { users: [] }
+  // 创建 100 个 users
+  for (let i = 0; i < 100; i++) {
+    data.users.push({ id: i, name: `user${i}` })
+  }
+  return data
+}
+
+
+访问以下地址可以获得整个数据库的数据。
+ http://localhost:3000/db
+如果想使用互联网上的数据，也可以直接运行 json-server 然后加上远端的地址即可。

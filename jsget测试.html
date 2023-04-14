@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+// res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
+// fetch('https://api.lolicon.app/setu/v2')
+//   .then(response => {
+//     if (response.ok) {
+//       return response.json();
+//     }
+//     throw new Error('Network response was not ok.');
+//   })
+//   .then(data => {
+//     console.log(data);
+//   })
+//   .catch(error => {
+//     console.log('Error: ' + error.message);
+//   });
+
+
+// fetch('https://api.lolicon.app/setu/v2',{credentials: 'include',mode: 'no-cors'})
+// .then(res =>{console.log(res);})
+
+const http = require('http');
+const server = http.createServer((req, res) => {
+  // 设置允许跨域访问的响应头，允许所有域名跨域访问
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  
+  // 设置其他响应头和响应内容
+  res.setHeader('Content-Type', 'text/plain');
+  res.write('Hello World!');
+  res.end();
+});
+server.listen(3000);
+const xhr = new XMLHttpRequest();
+xhr.open('GET', 'https://api.lolicon.app/setu/v2');
+xhr.send();
+
+    </script>
+</body>
+</html>

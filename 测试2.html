@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+const animeButton = document.createElement('button');
+const sceneryButton = document.createElement('button');
+const beautyButton = document.createElement('button');
+const spanp = document.createElement('span');
+animeButton.innerText = '次元';
+sceneryButton.innerText = '风景';
+beautyButton.innerText = '解语花';
+var show = 0;//可修改默认窗口状态，0为显示，1为隐藏
+var imgsize=true;
+let htop = "https://";
+// 创建图片
+const randomImage = document.createElement('img');
+randomImage.style.width = "300px";
+randomImage.onclick =()=>{
+    imgsize=!imgsize;
+    randomImage.style.width =imgsize ? '300px' : '750px';
+}
+// 创建按钮容器
+const buttonContainer = document.createElement('div');
+buttonContainer.style.position = 'fixed';
+buttonContainer.style.top = '20px';
+buttonContainer.style.right = '20px';
+buttonContainer.style.backgroundColor = '#FFF';
+buttonContainer.style.border = '1px solid #CCC';
+buttonContainer.style.boxShadow = '4px 4px 10px #CCC';
+buttonContainer.style.borderRadius = '10px';
+buttonContainer.style.padding = '10px';
+buttonContainer.style.zIndex = '9999';
+buttonContainer.style.transition = 'all 0.8s ease-out';
+buttonContainer.onmousedown = (event) => {//利用冒泡优化代码
+  const button = event.target.closest('button'); // 找到最近的button元素
+  if (button) {
+    button.style.filter = 'brightness(0.8)'; // 设置按钮亮度
+  }
+};
+buttonContainer.onmouseup = (event) => {
+  const button = event.target.closest('button');
+  if (button) {
+    button.style.filter = '';
+  }
+};
+// 设置按钮的样式
+const buttonStyle = `
+  background-color: #F9A7B0;
+  color: #FFF;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  margin-right: 10px;
+  cursor: pointer;
+  box-shadow:4px 4px 5px #CCC
+`;
+animeButton.style = buttonStyle;
+sceneryButton.style = buttonStyle;
+beautyButton.style = buttonStyle;
+spanp.innerText = `图片加载需要时间`
+spanp.style.fontSize = "10px"; // 设置字体大小为 10px
+spanp.style.color = "rgba(255, 192, 203, 0.8)"; // 设置颜色为粉色半透明
+spanp.style.verticalAlign = "bottom"; // 将元素与底部对齐
+// 设置按钮的单击事件
+let currentUrl = `${htop}api.ixiaowai.cn/mcapi/mcapi.php`; // 默认使用随机图片
+function getRandomImage(url) {
+  randomImage.src = url;
+}
+getRandomImage(currentUrl)
+animeButton.onclick = () => {
+  currentUrl = `${htop}api.ixiaowai.cn/api/api.php?t=${Date.now()}`; // 使用二次元图片
+  getRandomImage(currentUrl);
+};
+sceneryButton.onclick = () => {
+  currentUrl = `${htop}api.ixiaowai.cn/gqapi/gqapi.php?t=${Date.now()}`; // 使用风景图片
+  getRandomImage(currentUrl);
+};
+beautyButton.onclick = () => {
+  currentUrl = `${htop}cdn.seovx.com/?mom=302&t=${Date.now()}`; // 使用图片
+  getRandomImage(currentUrl);
+};
+// 将按钮和图片添加到容器中
+buttonContainer.appendChild(animeButton);
+buttonContainer.appendChild(sceneryButton);
+buttonContainer.appendChild(beautyButton);
+buttonContainer.appendChild(spanp);
+buttonContainer.appendChild(randomImage);
+document.body.appendChild(buttonContainer);
+// 设置图片的样式
+randomImage.style.display = 'block';
+randomImage.style.marginTop = '20px';
+randomImage.style.borderRadius = '10px';
+randomImage.style.transition="all 0.4s linear";
+
+const showbox = document.createElement('div');
+const directionImage = document.createElement('div');
+showbox.appendChild(directionImage);
+buttonContainer.appendChild(showbox);
+showbox.style = buttonStyle;
+directionImage.style=`
+width:0;
+height:0;
+border-top:10px solid transparent;
+border-bottom:10px solid transparent;
+border-left:10px solid transparent;
+border-left-color: white;
+transition:all 0.4s linear;
+`
+showbox.style=`width:10px;position:absolute;
+    top:20px;
+    left:-30px;
+    background-color: #F9A7B0;
+    padding: 10px;
+    border-radius: 8px 0 0 8px;
+    margin-right: 10px;
+    cursor: pointer; `
+function shows(){
+    if(show){
+    buttonContainer.style.right = '-325px';
+    directionImage.style.transform = 'rotate(-180deg)'
+    imgsize=true;
+    randomImage.style.width ='300px'
+    show=!show
+    }else{
+        buttonContainer.style.right = '20px';
+    directionImage.style.transform = 'rotate(0deg)';
+    show=!show
+    }
+}
+showbox.onclick = () => {
+shows()
+};
+shows()
+    </script>
+</body>
+</html>
