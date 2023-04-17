@@ -11,7 +11,7 @@
   <div >123 <p>456</p> <h3>789</h3></div>
 
     <script>
-var [show,seconds,imgsize,htop,result] = [1,0,true,"https://","18认证"]
+var [show,seconds,imgsize,htop,result] = [0,0,true,"https://","18认证"]
 //let currentUrl = `https://www.dmoe.cc/random.php`; // 备用
 let currentUrl = `${htop}api.yimian.xyz/img?type=head`;//小头像
 const animeButton = document.createElement('button');
@@ -24,8 +24,6 @@ sceneryButton.innerText = '风景';
 beautyButton.innerText = '小仙女';
 cosButton.innerText = 'COS';
 videoButton.innerText = '视频';
-const magnifyButton = document.createElement('button');//背景按钮
-magnifyButton.innerText = '⇱';
 const R18input = document.createElement('input');//单选
 R18input.type = 'checkbox';
 R18input.checked = false;
@@ -43,13 +41,7 @@ const spanp = document.createElement('div');//等待说明
 const showbox = document.createElement('div');//位置控制按钮
 const directionImage = document.createElement('div');//方向
 
-const randomImage = document.createElement('img');// 创建图片
-randomImage.style.width = "320px";
-randomImage.onclick =()=>{//单击图片
-    imgsize=!imgsize;
-    randomImage.style.width =imgsize ? '320px' : '800px';
-}
-randomImage.addEventListener("contextmenu", function(event) {//右击
+randomImage.addEventListener("click", function(event) {//右击
       event.preventDefault(); // 阻止默认事件，即不弹出上下文菜单
       result = prompt("恭喜你找到了真正的R18入口,请联系作者证明你已满18岁","金岂");
       if(result=="金岂"){animeButton.style.backgroundColor="Gold";cosButton.style.backgroundColor="Gold";R18input.checked = true;}
@@ -119,18 +111,6 @@ beautyButton.style = buttonStyle;
 cosButton.style = buttonStyle;
 videoButton.style = buttonStyle;
 //背景按钮样式
-magnifyButton.style = `
-  background-color: rgba(255, 255, 255, 0.8);
-  color: black;
-  border: none;
-  padding: 10px 13px;
-  border-radius:0 10px 0 0;
-  cursor: pointer;
-  position:absolute;
-  top:97px;
-  right:9px;
-  z-index:20
-`;
 magnifyButton.title =
 `单击设置为当前页面背景图片
 (因为跨域问题无法固定某张图片为背景)
@@ -138,7 +118,6 @@ magnifyButton.title =
 (另:单击图片可放大)`;
 
 // 说明样式
-spanp.innerText ="不同类型图片加载需要不同时间"
 spanp.style = `
 cursor:default;
 color:#FFC0CB;
@@ -314,7 +293,6 @@ buttonContainer.appendChild(randomImage);//图片
 buttonContainer.appendChild(videoye);//视频
 showbox.appendChild(directionImage);//方向
 buttonContainer.appendChild(showbox);//位置
-buttonContainer.appendChild(magnifyButton);//背景
 buttonContainer.appendChild(R18input);//单选
 buttonContainer.appendChild(spans);//单选文本
 document.body.appendChild(buttonContainer);
@@ -363,13 +341,6 @@ document.body.style.backgroundSize="cover";
 showbox.onclick = () => {//改变位置
 getRandomImage(currentUrl);
 shows();
-var timer = setInterval(function() {
-  seconds++;
-  spanp.innerText = seconds%2 ? "鼠标左击和右击是不同图源" : "不同类型图片加载需要不同时间"
-  if (seconds > 2) {
-    clearInterval(timer); // 停止计时器
-  }
-}, 5000);
 // Math.floor(Math.random() * 2)
 };
 
