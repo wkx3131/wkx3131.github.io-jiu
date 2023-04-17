@@ -74,7 +74,7 @@
 
      <el-button @click="mul()">返回目录</el-button>
      <div ref="txt" class="txtp">
-     <p v-for="(value,index) in texts" :key="index">{{value}}</p>
+     <p v-for="value in texts" :key="value.pid">{{value}}</p>
      </div>
      <!-- <div v-for="t in texts" :key="t.pid" v-html="t"></div> -->
      <el-button @click="mul()">返回目录</el-button>
@@ -254,7 +254,6 @@ transition:all 0.5s
   transition-delay: 0.5s;
 }
 .fade-leave-active {
-  position: absolute;
-  /* transition: none */
+  transition: none
 }
 </style>>
