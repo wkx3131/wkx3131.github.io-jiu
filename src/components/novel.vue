@@ -67,7 +67,7 @@
       <span>字号</span>
     <el-slider
       v-model="fontSize" vertical
-      :step="2" :min="14" :max="20"  :bar-background-color="yellow"
+      :step="2" :min="14" :max="20"
       show-stops @input="updateFontSize">
     </el-slider>
 </div>
