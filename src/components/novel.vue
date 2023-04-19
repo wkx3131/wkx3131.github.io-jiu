@@ -24,7 +24,7 @@
 <!-- 卡片 -->
 <el-form :inline="true" class="bookform" ref="heheiRef">
 <transition-group name="el-zoom-in-center" :inline="true">
-  <el-form-item v-for="value in books" :key="value.fictionId" v-show="showItems">
+  <el-form-item v-for="(value,index) in books" :key="value.fictionId" v-show="showItems" :style="{ 'transition-delay': (cardIndex.indexOf(index) * 0.2) + 's' }">
     <el-card :style="{width:'200px'}" class="bookform">
       <el-image style="width: 160px; height:200px" :src="value.cover" lazy></el-image>
       <div class="bottom">
@@ -91,7 +91,7 @@
 export default {
     data () {
       return {
-        books:"",
+        books:[],
         radio: 'title',
         author:"",
         directorys:[],
@@ -108,6 +108,11 @@ export default {
         fontSize:18
       };
     },
+    computed: {
+  cardIndex() {
+    return this.books.map((value, index) => index);
+  },
+},
     methods:{
     async book(){//书
 let loading = this.$loading({text: '加载中...',});
@@ -172,7 +177,6 @@ let loading = this.$loading({text: '加载中...',});
       }
     },
     updateFontSize() {
-      console.log("303");
       this.$refs.txt.style.fontSize = this.fontSize  + 'px';
     },
     totop(){
@@ -247,7 +251,8 @@ background-color: #b50909;
 }
 
 
-.el-zoom-in-center-enter-active{
+.el-zoom-in-center-enter-active,
+.el-zoom-in-center-leave-active{
 transition:all 0.5s
 }
 .fade-enter-active{
