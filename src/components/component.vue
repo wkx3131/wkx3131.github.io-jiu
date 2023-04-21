@@ -32,7 +32,8 @@
 
 
 <!-- 卡片 -->
-    <el-card class="box-card" v-for="value in data" :key="value.pid" >
+<transition-group name="el-fade-in">
+<el-card class="box-card" v-for="(value, index) in data" :key="value.pid" v-show="shows" :style="{ 'transition-delay': (cardIndex.indexOf(index) * 0.3) + 's' }">
   <div slot="header">
     <span>{{value.title}}</span>
   </div>
@@ -48,9 +49,10 @@
     </td>
   </tr>
 </table>
-
   </div>
 </el-card>
+</transition-group>
+
 </div>
 </template>
 <script>
@@ -62,7 +64,8 @@ export default {
             suffix:"/v2/?num=10",
             author:"",
             label:"",
-            swi:false
+            swi:false,
+            shows:false
             
         }
     },
@@ -70,6 +73,11 @@ export default {
         this.axi()
         // this.v2(this.suffix)
     },
+    computed: {
+  cardIndex() {
+    return this.data.map((value, index) => index);
+  },
+},
     methods:{
         async axi(){
            const {data:shuju} = await this.$http.get("/api/dm-qiaomen")
@@ -82,6 +90,7 @@ export default {
         //    console.log(arr.data);
            this.data = arr.data
            loading.close()
+           this.shows=true;
         },
         onSubmit () {
                 if (isNaN(this.author)){

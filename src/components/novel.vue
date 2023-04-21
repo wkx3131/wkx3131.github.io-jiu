@@ -24,7 +24,7 @@
 <!-- 卡片 -->
 <el-form :inline="true" class="bookform" ref="heheiRef">
 <transition-group name="el-zoom-in-center" :inline="true">
-  <el-form-item v-for="value in books" :key="value.fictionId" v-show="showItems">
+  <el-form-item v-for="(value,index) in books" :key="value.fictionId" v-show="showItems" :style="{ 'transition-delay': (cardIndex.indexOf(index) * 0.2) + 's'}">
     <el-card :style="{width:'200px'}" class="bookform">
       <el-image style="width: 160px; height:200px" :src="value.cover" lazy></el-image>
       <div class="bottom">
@@ -41,7 +41,7 @@
 
 <div >
 <!-- 目录 -->
-<transition name="el-zoom-in-center" mode="out-in">
+<transition name="el-zoom-in-center" >
 <el-card v-show="muli" class="bookform" style="text-align: center;" key="muli" >
 <el-form :inline="true">
   <el-button @click="mul()">返回文本</el-button><p></p>
@@ -53,7 +53,7 @@
 </transition>
 
 <!-- 文本 -->
-<transition name="el-zoom-in-center" enter-active-class="fade-enter-active" leave-active-class="fade-leave-active" mode="out-in">
+<transition name="el-zoom-in-center" enter-active-class="fade-enter-active" leave-active-class="fade-leave-active" >
     <el-card v-show="wenb" class="bookform" :style="{ backgroundColor: bgColor, color: fontColor}" key="wenb">
           <el-switch class="switchsty"
   v-model="swi"
@@ -63,24 +63,25 @@
     >
 </el-switch>
 
-<div class="vertical-slider">
-      <span>字号</span>
-    <el-slider
-      v-model="fontSize" vertical
-      :step="2" :min="14" :max="20"  :bar-background-color="yellow"
-      show-stops @input="updateFontSize">
-    </el-slider>
-</div>
+
 
      <el-button @click="mul()">返回目录</el-button>
      <div ref="txt" class="txtp">
-     <p v-for="(value,index) in texts" :key="index">{{value}}</p>
+     <p v-for="value in texts" :key="value.pid">{{value}}</p>
      </div>
      <!-- <div v-for="t in texts" :key="t.pid" v-html="t"></div> -->
      <el-button @click="mul()">返回目录</el-button>
      <el-button @click="next()">下一页</el-button>
     </el-card>
 </transition>
+<div class="vertical-slider" v-show="wenb">
+      <span>字号</span>
+    <el-slider
+      v-model="fontSize" vertical
+      :step="2" :min="14" :max="20"
+      show-stops @change="updateFontSize">
+    </el-slider>
+</div>
 </div>
 
   </div>
@@ -91,7 +92,7 @@
 export default {
     data () {
       return {
-        books:"",
+        books:[],
         radio: 'title',
         author:"",
         directorys:[],
@@ -108,6 +109,11 @@ export default {
         fontSize:18
       };
     },
+    computed: {
+  cardIndex() {
+    return this.books.map((value, index) => index);
+  },
+},
     methods:{
     async book(){//书
 let loading = this.$loading({text: '加载中...',});
@@ -172,7 +178,6 @@ let loading = this.$loading({text: '加载中...',});
       }
     },
     updateFontSize() {
-      console.log("303");
       this.$refs.txt.style.fontSize = this.fontSize  + 'px';
     },
     totop(){
@@ -242,19 +247,16 @@ let loading = this.$loading({text: '加载中...',});
 .el-slider{
   height: 100px;
 }
-.el-slider__runway{
-background-color: #b50909;
-}
 
 
-.el-zoom-in-center-enter-active{
-transition:all 0.5s
+.el-zoom-in-center-enter-active,
+.el-zoom-in-center-leave-active{
+transition:all 0.5s;
 }
 .fade-enter-active{
   transition-delay: 0.5s;
 }
 .fade-leave-active {
-  position: absolute;
-  /* transition: none */
+  transition: none
 }
 </style>>
