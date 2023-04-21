@@ -71,7 +71,7 @@ export default {
     },
     created(){
         this.axi()
-        // this.v2(this.suffix)
+        this.v2(this.suffix)
     },
     computed: {
   cardIndex() {
@@ -85,7 +85,8 @@ export default {
            this.na=shuju.data.content;
         },
         async v2(b){
-          let loading = this.$loading({text: '加载中...',});
+          let loading = this.$loading({text: '加载中...'
+        });
            const {data:arr} = await this.$http.get(b)
         //    console.log(arr.data);
            this.data = arr.data

@@ -75,7 +75,7 @@
     </el-card>
 </transition>
 <div class="vertical-slider" v-show="wenb">
-      <span>字号</span>
+      <span style="font-size:14px">字号</span>
     <el-slider
       v-model="fontSize" vertical
       :step="2" :min="14" :max="20"
@@ -106,7 +106,7 @@ export default {
         bgColor: "#fff",
         fontColor: "#000",
         showItems:false,//书
-        fontSize:18
+        fontSize:18,
       };
     },
     computed: {
@@ -116,7 +116,9 @@ export default {
 },
     methods:{
     async book(){//书
-let loading = this.$loading({text: '加载中...',});
+let loading = this.$loading({text: '加载中...',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'});
        const {data:book} = await this.$http.get("/xiao/fiction/search/"+this.radio+"/"+this.author+"/1/6")
        if(book.msg=="成功"){
          this.books=book.data;
@@ -132,7 +134,9 @@ let loading = this.$loading({text: '加载中...',});
        this.showItems=true;
     },
     async directory(b){//目录
-        let loading = this.$loading({text: '加载中...',});
+let loading = this.$loading({text: '加载中...',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'});
        const {data:dir} = await this.$http.get("/xiao/fictionChapter/search/"+b)
        this.directorys=dir.data.chapterList;
        this.muli=true;
@@ -140,7 +144,9 @@ let loading = this.$loading({text: '加载中...',});
        this.totopxp = Math.ceil(this.$refs.heheiRef.$el.offsetHeight)+50;
     },
     async text(b,p,e){//文本
-        let loading = this.$loading({text: '加载中...',});
+let loading = this.$loading({text: '加载中...',
+        spinner: 'el-icon-lollipop',
+        background: 'rgba(0, 0, 0, 0.7)'});
        const {data:te} = await this.$http.get("/xiao/fictionContent/search/"+b)
        this.texts=te.data;
        e.target.style.color = '#8a2be2';
@@ -154,7 +160,9 @@ let loading = this.$loading({text: '加载中...',});
        
     },
     async next(){//下一页
-        let loading = this.$loading({text: '加载中...',});
+let loading = this.$loading({text: '加载中...',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'});
        const {data:tes} = await this.$http.get("/xiao/fictionContent/search/"+this.nextid)
        this.texts=tes.data;
        loading.close()
@@ -171,7 +179,7 @@ let loading = this.$loading({text: '加载中...',});
     ry() {
       if (this.swi) {
         this.bgColor = "#000";
-        this.fontColor = "#fff";
+        this.fontColor = "#f7f7f7";
       } else {
         this.bgColor = "#f7f7f7";
         this.fontColor = "#000";
@@ -259,4 +267,14 @@ transition:all 0.5s;
 .fade-leave-active {
   transition: none
 }
-</style>>
+
+.el-slider__button{
+      border: 2px solid #4022FF;
+}
+.el-slider__runway{
+  background-color: red;
+  }
+  .el-slider__runway-wrapper {
+  background-color: transparent; 
+}
+</style>

@@ -2,7 +2,7 @@
 <template>
   <el-container class="home-container">
     <el-header
-      ><h2>管理系统</h2>
+      ><h2>     管理系统</h2>
       <el-button type="info" @click="logout">退出</el-button>
       </el-header
     >
@@ -148,7 +148,8 @@ export default {
   overflow: hidden;
   position: relative;
   padding-top: 80px;
-  padding-left: 230px;
+  padding-left: 220px;
+  padding-right: 25px;
   /* top: 60px; */
 }
 </style>
