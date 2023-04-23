@@ -29,3 +29,22 @@ module.exports = defineConfig({
     }
   }
 })
+
+// const { createProxyMiddleware } = require('http-proxy-middleware')
+// module.exports = {
+//   devServer: {
+//     transpileDependencies: true,
+//     lintOnSave:false,//严格模式
+//     runtimeCompiler: true,
+//     // 配置代理
+//     proxy: {
+//       '/api': {
+//         target: 'https://api.qqsuu.cn/api/', // 目标 API 地址
+//         changeOrigin: true,
+//         pathRewrite: {
+//           '^/api': '', // 将 /api 替换为空，即去掉 /api
+//         },
+//       },
+//     }
+//   }
+// }
