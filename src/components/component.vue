@@ -104,7 +104,7 @@ export default {
                     this.suffix +="&r18=true"
                 }
                 this.v2(this.suffix)
-                this.suffix="/v2/?num=10"
+                this.suffix="/v2/?num=10"//恢复初始
             }
             
     }
