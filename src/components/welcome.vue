@@ -1,5 +1,20 @@
 <template>
     <div>
-        <h3>welcome</h3>
+        <h1>welcome</h1>
     </div>
 </template>
+<script>
+// export default {
+//     data(){
+//         return{
+//             pacg:1
+//         }
+//     },
+//     methods:{
+//         packto(b){
+//             this.pacg=b;
+//             console.log(this.pacg);
+//         }
+//     }
+// }
+</script>
