@@ -14,9 +14,10 @@
 
 <el-form-item>
     <el-input
-  placeholder="查询内容"
+  placeholder="查询内容或作者名"
   v-model="label"
-  clearable>
+  clearable
+  ref="intxt">
 </el-input>
   </el-form-item>
 
@@ -33,19 +34,22 @@
 
 <!-- 卡片 -->
 <transition-group name="el-fade-in">
-<el-card class="box-card" v-for="(value, index) in data" :key="value.pid" v-show="shows" :style="{ 'transition-delay': (cardIndex.indexOf(index) * 0.3) + 's' }">
+<el-card class="box-card" v-for="value in data" :key="value.pid">
   <div slot="header">
     <span>{{value.title}}</span>
   </div>
   <div>
    <table>
   <tr>
-    <td class="informa">作者:{{value.author}}<br>作者id:{{value.author_uid}}</td>
-    <td rowspan="2" class="imginde"><img v-lazy="value.url" height="300px"></td>
+    <td class="informa">作者：{{value.author}}<br>作者id：{{value.author_uid}}<br>作品id：{{value.pid}}</td>
+    <td rowspan="2" class="imginde">
+      <!-- <img src="../json/合理.png"> -->
+      <img v-lazy="value.url" height="300px" onerror='../json/合理.png'>
+      </td>
   </tr>
   <tr>
     <td class="tags">
-        <el-tag size="small" v-for="i in value.tags" :key="i.tag">{{i}}</el-tag>
+        <el-tag  v-for="i in value.tags" :key="i.tag" @click="txtcopy(i)">{{i}}</el-tag>
     </td>
   </tr>
 </table>
@@ -65,7 +69,6 @@ export default {
             author:"",
             label:"",
             swi:false,
-            shows:false
             
         }
     },
@@ -73,11 +76,6 @@ export default {
         this.axi()
         this.v2(this.suffix)
     },
-    computed: {
-  cardIndex() {
-    return this.data.map((value, index) => index);
-  },
-},
     methods:{
         async axi(){
            const {data:shuju} = await this.$http.get("/api/dm-qiaomen")
@@ -91,7 +89,6 @@ export default {
         //    console.log(arr.data);
            this.data = arr.data
            loading.close()
-           this.shows=true;
         },
         onSubmit () {
                 if (isNaN(this.author)){
@@ -105,6 +102,9 @@ export default {
                 }
                 this.v2(this.suffix)
                 this.suffix="/v2/?num=10"//恢复初始
+            },
+            txtcopy(i){
+              this.$refs.intxt.value = i
             }
             
     }
@@ -125,9 +125,11 @@ td{
 height: 50px;
 }
 .tags{
+  width: 600px;
     margin: 0;
     padding: 0;
 }
+
 .imginde{
     text-align: center;
 }
@@ -137,5 +139,6 @@ height: 50px;
 }
 .el-tag{
     margin-right: 8px;
+    margin-top: 6px;
 }
 </style>

@@ -1,8 +1,9 @@
 
 <template>
   <el-container class="home-container">
-    <el-header
-      ><h2>&emsp;金岂的垃圾堆</h2>
+    <el-header>
+      <h2>&emsp;金岂的垃圾堆</h2>
+      <!-- <h2>&emsp;管理系统</h2> -->
       <el-button type="info" @click="logout">退出</el-button>
       </el-header
     >

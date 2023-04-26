@@ -1,6 +1,7 @@
 <template>
     <div>
         <h1>welcome</h1>
+        <h2>vx:sumo3131549989</h2>
     </div>
 </template>
 <script>

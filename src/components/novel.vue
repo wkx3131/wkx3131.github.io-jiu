@@ -274,7 +274,6 @@ setTimeout(()=>{
 .switchsty{
   float: right;
 }
-
 .vertical-slider {
   height: 120px;
   position: fixed;
