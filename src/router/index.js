@@ -9,6 +9,8 @@ import Component from '../components/component.vue'
 import novel from '../components/novel.vue'
 Vue.use(VueRouter)
 
+//Vue.component('now-time', NowTime)全局组件的写法
+
 const routes = [
   { path: '/login', component: Login },
   {path: '/home', component: Home, redirect: '/welcome',

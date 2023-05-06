@@ -1,12 +1,14 @@
 
 <template>
   <el-container class="home-container">
+    <!-- 头部 -->
     <el-header>
       <h2>&emsp;金岂的垃圾堆</h2>
       <!-- <h2>&emsp;管理系统</h2> -->
       <el-button type="info" @click="logout">退出</el-button>
-      </el-header
-    >
+      </el-header>
+    
+    <!-- 主体 -->
     <el-container>
       <!-- 侧边栏 根据缩进改变宽-->
       <el-aside :width="isCollapse ? '64px' : '200px'">
@@ -49,12 +51,16 @@
           </el-submenu>
         </el-menu>
       </el-aside>
+      <!-- 主页面 -->
       <el-main ref="mainRef">
         <!-- 路由占位符 -->
+        <transition mode='out-in' name="left">
         <router-view></router-view>
+        </transition>
       </el-main>
     </el-container>
-  </el-container>
+  </el-container>  <!-- 这里结构是正确的 -->
+
 </template>
 
 <script>
@@ -152,5 +158,19 @@ export default {
   padding-left: 220px;
   padding-right: 25px;
   /* top: 60px; */
+}
+
+/* 动画 */
+.left-enter{
+  transform: translateX(-110%);
+  /* 新页面 */
+}
+.left-leave-to{
+  transform:translateX(-110%);
+  /* 旧页面 */
+}
+.left-enter-active,
+.left-leave-active{
+  transition: .5s;
 }
 </style>
