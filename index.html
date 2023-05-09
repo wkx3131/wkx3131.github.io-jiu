@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./二次元.svg">
-    <title>休息一下网页版(金岂)</title>
+    <title>休息一下(网页版)金岂</title>
 </head>
 <body>
     <script>
@@ -34,15 +34,17 @@ R18input.onchange = (event)=>{
   }
     R18input.checked = false;
 }
-const spans = document.createElement('div');//单选文本
+const spans = document.createElement('label');//单选文本
 spans.innerText = '开启R18模式';
-const righttxt = document.createElement('div');//右击文本
+spans.setAttribute("for", "moshi");
+const righttxt = document.createElement('label');//右击文本
 righttxt.innerText = '模拟右击(手机适配)';
+righttxt.setAttribute("for", "youji");
 
 const randomImage = document.createElement('img');// 创建图片
 randomImage.style.width = "100%";
 randomImage.addEventListener("click", function(event) {
-  if(rightban.checked){
+  if(rightban.checked && result!="金岂"){//////
     result = prompt("恭喜你找到了真正的R18入口,请联系作者证明你已满18岁","金岂");
       if(result=="金岂"){animeButton.style.backgroundColor="Gold";cosButton.style.backgroundColor="Gold";R18input.checked = true;}else{
       animeButton.style.backgroundColor="#FFC0CB";cosButton.style.backgroundColor="#FFC0CB";R18input.checked = false;}
@@ -53,9 +55,10 @@ randomImage.addEventListener("click", function(event) {
 })
 randomImage.addEventListener("contextmenu", function(event) {//右击
       event.preventDefault(); // 阻止默认事件，即不弹出上下文菜单
+      if(result!="金岂"){/////
       result = prompt("恭喜你找到了真正的R18入口,请联系作者证明你已满18岁","金岂");
       if(result=="金岂"){animeButton.style.backgroundColor="Gold";cosButton.style.backgroundColor="Gold";R18input.checked = true;}else{
-      animeButton.style.backgroundColor="#FFC0CB";cosButton.style.backgroundColor="#FFC0CB";R18input.checked = false;}
+      animeButton.style.backgroundColor="#FFC0CB";cosButton.style.backgroundColor="#FFC0CB";R18input.checked = false;}}
     });
 
 const newDiv = document.createElement('div');//底部加载提示
@@ -95,13 +98,13 @@ position: relative;
   min-height:100px;
   background-color: #FFF;
   border: 4px solid #c9c9c9;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 15px;
   padding-top: 40px;
   z-index: 9999;
   transition: all 0.8s ease-out;
   text-align: center;
-`;//#F5F5F5乳白色
+`;//#F5F5F5乳白色/////
 
 // 按钮通用样式
 const buttonStyle = `
@@ -140,25 +143,27 @@ top:12px;
 right:10px;
 font-size:10px;
 cursor: default;`;
+righttxt.style=`
+color: black;
+position:absolute;
+top:12px;
+right:105px;
+font-size:10px;
+cursor: default;`;
 // 单选样式
 R18input.style=`
 position:absolute;
 top:10px;
 right:80px;
 cursor: pointer;`;
-righttxt.style=`
-color: black;
-position:absolute;
-top:12px;
-right:105px;
-font-size:12px;
-cursor: default;`;
+R18input.id="moshi";
 // 右击
 rightban.style=`
 position:absolute;
 top:10px;
 right:210px;
 cursor: pointer;`;
+rightban.id="youji";
 
 buttonContainer.onmousedown = (event) => {//利用冒泡优化代码
   const button = event.target.closest('button'); // 找到最近的button元素
@@ -182,7 +187,7 @@ currentUrl = `${htop}www.dmoe.cc/random.php?t=${Date.now()}`;
   }
   }else{
   if(result=="金岂"){
-    currentUrl = `${htop}sex.nyan.xyz/api/v2/img?r18=true`
+    currentUrl = `${htop}sex.nyan.xyz/api/v2/img?r18=true&t=${Date.now()}`/////
     // moe.anosu.top/img?sort=setu 备用
   }else{
     currentUrl = `${htop}service-dn725wcs-1306777571.gz.apigw.tencentcs.com/release/?t=${Date.now()}`; // 使用二次元图片
@@ -263,7 +268,7 @@ cosButton.addEventListener("contextmenu", function(event) {//右击
     });
 // --
 videoButton.onclick = () => {
-  videoye.src=`https://api.qqsuu.cn/api/dm-xjj?type=video`;// 使用视频
+  videoye.src=`https://api.qqsuu.cn/api/dm-xjj?type=video&t=${Date.now()}`;// 使用视频/////
   videoye.style.display="block";
   currentUrl = ""
   getRandomImage(currentUrl);
@@ -293,13 +298,14 @@ if (result) {
   alert('〠经过系统检测,你未满180周岁,根据《未成年人保护法》你无法访问R18内容!');
 }}
 function getRandomImage(url) {//链接
-    randomImage.src = "";////
+    randomImage.src = "";
   randomImage.src = url;
 }
 getRandomImage(currentUrl)
 
 
 // http://2t8.cn/oX8s6
+// https://zws.im/󠁣󠁡󠁤󠁣󠁫󠁳󠁳
     </script>
     <style>
       body{
