@@ -10,13 +10,14 @@
 <body>
     <script>
 var [imgsize,htop,result] = [true,"https://","18认证"]
-//let currentUrl = `https://www.dmoe.cc/random.php`; // 备用
-let currentUrl = `${htop}api.yimian.xyz/img?type=head`;//小头像
+//let currentUrl = `${htop}api.yimian.xyz/img?type=head`;//小头像
+let currentUrl = `https://api.likepoems.com/img/mc`;//小头像
 const animeButton = document.createElement('button');
 const sceneryButton = document.createElement('button');
 const beautyButton = document.createElement('button');
 const cosButton = document.createElement('button');
 const videoButton = document.createElement('button');
+var Downloada = document.getElementById("Download");
 animeButton.innerText = 'ACG';
 sceneryButton.innerText = '风景';
 beautyButton.innerText = '小仙女';
@@ -35,7 +36,7 @@ R18input.onchange = (event)=>{
     R18input.checked = false;
 }
 const spans = document.createElement('label');//单选文本
-spans.innerText = '开启R18模式';
+spans.innerText = 'R18模式';
 spans.setAttribute("for", "moshi");
 const righttxt = document.createElement('label');//右击文本
 righttxt.innerText = '模拟右击(手机适配)';
@@ -50,7 +51,7 @@ randomImage.addEventListener("click", function(event) {
       animeButton.style.backgroundColor="#FFC0CB";cosButton.style.backgroundColor="#FFC0CB";R18input.checked = false;}
   }else{
     imgsize=!imgsize;
-    buttonContainer.style.width =imgsize ? '90%' : '50%';
+    buttonContainer.style.width =imgsize ? '90%' : '55%';
   }
 })
 randomImage.addEventListener("contextmenu", function(event) {//右击
@@ -78,7 +79,7 @@ randomImage.onerror = function() {
 
 const videoye = document.createElement('video');//创建视频
 const container = document.getElementById("div");
-videoye.width=320;
+videoye.style.width='100%';
 videoye.controls = true;
 videoye.autoplay = true;
 videoye.style.display="none";
@@ -141,27 +142,27 @@ color: black;
 position:absolute;
 top:12px;
 right:10px;
-font-size:10px;
+font-size:12px;
 cursor: default;`;
 righttxt.style=`
 color: black;
 position:absolute;
 top:12px;
-right:105px;
-font-size:10px;
+right:80px;
+font-size:12px;
 cursor: default;`;
 // 单选样式
 R18input.style=`
 position:absolute;
 top:10px;
-right:80px;
+right:55px;
 cursor: pointer;`;
 R18input.id="moshi";
 // 右击
 rightban.style=`
 position:absolute;
 top:10px;
-right:210px;
+right:185px;
 cursor: pointer;`;
 rightban.id="youji";
 
@@ -302,7 +303,16 @@ function getRandomImage(url) {//链接
   randomImage.src = url;
 }
 getRandomImage(currentUrl)
-
+const isMobile = /Android|iPhone|Opera Mini/i.test(navigator.userAgent);
+// /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+if (isMobile) {
+  // 当前是手机打开的
+  //buttonContainer.style.width ='90%';
+} else {
+  // 当前是电脑打开的
+  imgsize=false;
+  buttonContainer.style.width ='55%';
+}
 
 // http://2t8.cn/oX8s6
 // https://zws.im/󠁣󠁡󠁤󠁣󠁫󠁳󠁳
