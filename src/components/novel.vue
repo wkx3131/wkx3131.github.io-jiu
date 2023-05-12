@@ -105,15 +105,17 @@
       <transition
         name="el-zoom-in-center"
         enter-active-class="fade-enter-active"
-        leave-active-class="fade-leave-active">
+        leave-active-class="fade-leave-active"
+      >
         <el-card
           v-show="wenb"
           :class="caizhi"
           :style="{ backgroundColor: bgColor, color: fontColor }"
           key="wenb"
-          >
+        >
           <!-- ref="carRef" 动画用-->
-          <el-button @click="mul()">返回目录</el-button><span>&emsp;全文{{ fontlenght }}字</span>
+          <el-button @click="mul()">返回目录</el-button
+          ><span>&emsp;全文{{ fontlenght }}字</span>
           <!-- 开关 -->
           <el-switch
             class="switchsty"
@@ -124,13 +126,16 @@
           >
           </el-switch>
           <!-- 材质 -->
-          <el-select v-model="caizhi" placeholder="关闭材质" @change="yicaizhi()">
+          <el-select
+            v-model="caizhi"
+            placeholder="关闭材质"
+            @change="yicaizhi()"
+          >
             <el-option
               v-for="item in options"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-              
             >
             </el-option>
           </el-select>
@@ -165,23 +170,23 @@
 export default {
   data() {
     return {
-      books: [],//获取的书
-      radio: "title",//查找方式
-      content: "",//查找内容
-      directorys: [],//原始目录
-      directorys2: [],//修改后目录
-      texts: [],//小说内容
+      books: [], //获取的书
+      radio: "title", //查找方式
+      content: "", //查找内容
+      directorys: [], //原始目录
+      directorys2: [], //修改后目录
+      texts: [], //小说内容
       muli: false, //目录，显示
       wenb: true, //文本，显示
-      p: 0,//当前章节序号
-      nextid: "",//下一章id
+      p: 0, //当前章节序号
+      nextid: "", //下一章id
       swi: false, //黑白控制
       bgColor: "#fff",
       fontColor: "#000",
       showItems: false, //书，显示
-      fontSize: 18,//字体大小
+      fontSize: 18, //字体大小
       pages: 1, //当前页数
-      caizhi: "bookform beijing",//当前材质
+      caizhi: "bookform beijing", //当前材质
       options: [
         { value: "bookform beijing", label: "关闭材质" },
         {
@@ -196,7 +201,7 @@ export default {
           value: "bookform beijingg",
           label: "泛黄书页",
         },
-      ] //材质选项
+      ], //材质选项
     };
   },
   mounted() {
@@ -213,7 +218,8 @@ export default {
     // cardIndex() {
     //   return this.books.map((value, index) => index);
     // },
-    fontlenght() {//计算字符数
+    fontlenght() {
+      //计算字符数
       var chineseCharCount = 0;
       this.texts.forEach(function (ass) {
         chineseCharCount += ass.length;
@@ -224,10 +230,12 @@ export default {
   methods: {
     async book() {
       //获取书
+      let target = document.querySelector("#app");
       let loading = this.$loading({
         text: "加载中...",
         spinner: "el-icon-loading",
         background: "rgba(0, 0, 0, 0.8)",
+        target: target,
       });
       this.showItems = false;
       this.wenb = false;
@@ -264,7 +272,7 @@ export default {
       this.muli = true;
       loading.close();
       this.totop();
-      //  console.log(b);
+      // console.log(b);
     },
     async text(b, p, e) {
       //获取文本
@@ -278,14 +286,14 @@ export default {
         "/xiao/fictionContent/search/" + b
       );
       this.texts = te.data;
-      e.target.style.color = "#8a2be2";//点击的章节改变颜色
+      e.target.style.color = "#8a2be2"; //点击的章节改变颜色
       this.wenb = true;
       this.muli = false;
       loading.close();
-      this.p = p + 1;
-      this.nextid = this.directorys[this.p + (this.pages - 1) * 119].chapterId;
+      this.p = p + 1 + (this.pages - 1) * 120;
+      this.nextid = this.directorys[this.p].chapterId;
       console.log(this.p);
-      //  console.log(this.nextid);
+      // console.log(this.nextid);
     },
     async next() {
       //下一页
@@ -306,8 +314,8 @@ export default {
       this.texts = tes.data;
       //  this.$refs.carRef.$el.classList = "rotate bookform"
       this.p += 1;
-      this.nextid = this.directorys[this.p + (this.pages - 1) * 119].chapterId;
-      console.log(this.p + (this.pages - 1) * 119);
+      this.nextid = this.directorys[this.p].chapterId;
+      console.log(this.p);
     },
     mul() {
       //返回目录
@@ -325,19 +333,21 @@ export default {
         this.fontColor = "#000";
       }
     },
-    yicaizhi(){
-     // 材质辅助控制
-      if(this.caizhi =="bookform beijingh"){
-        this.swi= true;
-      }else{
-        this.swi= false;
+    yicaizhi() {
+      // 材质辅助控制
+      if (this.caizhi == "bookform beijingh") {
+        this.swi = true;
+      } else {
+        this.swi = false;
       }
-        this.ry()
+      this.ry();
     },
-    updateFontSize() {//字体大小
+    updateFontSize() {
+      //字体大小
       this.$refs.txt.style.fontSize = this.fontSize + "px";
     },
-    totop() {//返回上方
+    totop() {
+      //返回上方
       setTimeout(() => {
         window.scrollTo({
           top: Math.ceil(this.$refs.heheiRef.$el.offsetHeight) + 70,
@@ -401,7 +411,7 @@ export default {
   font-size: 18px;
   white-space: pre-wrap; /* 自动换行 */
   font-family: "Microsoft YaHei", "微软雅黑";
-  font-weight:500;
+  font-weight: 600;
   margin: 0 0 1em;
   /* 段间距 */
   line-height: 1.6;
@@ -430,21 +440,21 @@ export default {
   height: 100px;
 }
 .beijing {
- background: none;
+  background: none;
 }
 .beijingb {
- background:url(../json/780.jpg) no-repeat  center;
- background-size:100% 100%;
- border: 2px solid #ccc;
+  background: url(../json/780.jpg) center;
+  background-size: 100% auto;
+  border: 2px solid #ccc;
 }
 .beijingh {
- background:url(../json/880.jpg) no-repeat fixed;
- background-size: 100% 120%;
+  background: url(../json/880.jpg) no-repeat fixed;
+  background-size: 100% 100%;
 }
 .beijingg {
- background:url(../json/980.jpg) center;
- background-size: 100% auto;
- border: 2px solid #aaa;
+  background: url(../json/980.jpg) center;
+  background-size: 100% auto;
+  border: 2px solid #aaa;
 }
 
 .el-zoom-in-center-leave-active,
