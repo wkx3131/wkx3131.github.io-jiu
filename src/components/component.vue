@@ -1,10 +1,9 @@
 <template>
   <div id="app">
-    <!-- <child message="hello!"></child> -->
-
     <el-tooltip
       class="item"
       effect="dark"
+      :enterable="false"
       content="点击刷新小知识"
       placement="bottom"
     >
@@ -19,36 +18,78 @@
 
       <el-form-item>
         <el-input
-          placeholder="查询内容或作者名"
+          placeholder="查询标题/标签  或作者名"
           v-model="label"
           clearable
-          ref="intxt"
         >
         </el-input>
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">查找</el-button>
+        <el-button type="primary" @click="onSubmit" icon="el-icon-search"
+          >查找</el-button
+        >
       </el-form-item>
       <el-switch v-model="swi" active-text="特殊" inactive-text="常规">
       </el-switch>
     </el-form>
+    <!--  -->
+    <el-button type="text" :icon="icon" @click="xiaz()">高级搜索</el-button
+    ><br />
+    <transition name="el-zoom-in-top">
+      <div v-show="iconb" class="gaojidiv">
+        <el-tag
+          :key="tag"
+          v-for="tag in dynamicTags"
+          closable
+          class="tag-cs"
+          :disable-transitions="true"
+          @close="handleClose(tag)"
+          @click="danjiClose(tag)"
+        >
+          {{ tag }}
+        </el-tag>
+        <el-input
+          class="input-new-tag"
+          v-if="inputVisible"
+          v-model="inputValue"
+          ref="saveTagInput"
+          size="small"
+          @keyup.enter.native="handleInputConfirm"
+          @blur="handleInputConfirm"
+        >
+        </el-input>
+        <el-button v-else class="button-new-tag" size="small" @click="showInput"
+          >添加搜索关键字</el-button
+        >
+        <p>
+          <el-button
+            type="primary"
+            @click="xinSubmit"
+            icon="el-icon-search"
+            class="button-new-tag"
+            >高级搜索</el-button
+          >&emsp;
+          <el-checkbox v-model="yange">严格模式</el-checkbox>
+        </p>
+      </div>
+    </transition>
 
     <!-- 卡片 -->
     <transition-group name="el-fade-in-linear">
       <el-card
         class="box-card"
-        v-for="value in data"
+        v-for="(value, index) in data"
         :key="value.pid"
         v-show="imgshow"
       >
         <div slot="header">
-          <span>{{ value.title }}</span>
+          <span>{{ index }}&emsp;{{ value.title }}</span>
         </div>
         <table>
           <tr>
             <td class="informa">
-              <b>
+              <b @click="author = value.author_uid">
                 作者：{{ value.author }}<br />作者id：{{ value.author_uid
                 }}<br />作品id：{{ value.pid }}</b
               >
@@ -64,7 +105,7 @@
                 :src="value.url"
                 :preview-src-list="[value.url]"
                 lazy
-                :fit="scale - down"
+                fit="scale-down"
               >
                 <!-- <div slot="error" class="image-slot">
                     <i class="el-icon-picture-outline"></i>
@@ -76,28 +117,43 @@
             <td class="tags">
               <el-tag
                 v-for="i in value.tags"
-                :key="i.tag"
+                :key="i"
                 @click="txtcopy(i)"
+                class="tag-cs"
                 >{{ i }}</el-tag
               >
             </td>
           </tr>
         </table>
       </el-card>
-      <el-tooltip
-        effect="dark"
-        content="回到顶部"
-        placement="right"
-        v-show="imgshow"
-        key="primary"
-      >
-        <el-button
-          type="primary"
-          icon="el-icon-caret-top"
-          circle
-          @click="totop()"
-        ></el-button>
-      </el-tooltip>
+      <div class="raico" v-show="imgshow" key="primary">
+        <el-tooltip
+          effect="dark"
+          content="回到顶部"
+          placement="right"
+          :enterable="false"
+        >
+          <el-button
+            type="primary"
+            icon="el-icon-caret-top"
+            circle
+            @click="totop()"
+          ></el-button>
+        </el-tooltip>
+        <el-tooltip
+          effect="dark"
+          content="刷新当前搜索"
+          placement="right"
+          :enterable="false"
+        >
+          <el-button
+            type="primary"
+            icon="el-icon-refresh"
+            circle
+            @click="v2(dibubianjie)"
+          ></el-button>
+        </el-tooltip>
+      </div>
     </transition-group>
   </div>
 </template>
@@ -106,17 +162,24 @@ export default {
   data() {
     return {
       na: "",
-      data: [],
-      suffix: "/v2/?num=10",
+      data: [], //图片数据
+      suffix: "/v2/?num=10", //空搜索
       author: "",
       label: "",
-      swi: false,
-      imgshow: false,
+      swi: false, //18
+      imgshow: false, //卡片显示
+      iconb: false, //图标判断
+      icon: "el-icon-arrow-up", //高级搜索图标
+      dynamicTags: ["原创"], //多关键字
+      inputVisible: false, //输入框
+      inputValue: "", //新值内容
+      yange: false, //严格模式
+      dibubianjie: "/v2/?num=10",
     };
   },
   created() {
     this.axi();
-    this.v2(this.suffix);
+    // this.v2(this.suffix);
   },
   methods: {
     async axi() {
@@ -125,13 +188,25 @@ export default {
       this.na = shuju.data.content;
     },
     async v2(b) {
+      this.imgshow = false;
       const { data: arr } = await this.$http.get(b);
       this.imgshow = true;
       //    console.log(arr.data);
-      this.data = arr.data;
+      if (Array.isArray(arr.data)) {
+        this.data = arr.data;
+      } else {
+        this.data = [];
+        this.$notify.info({
+          title: "提示",
+          message: "该搜索无结果",
+          showClose: false,
+          offset: 60,
+        });
+      }
     },
     onSubmit() {
-      if (isNaN(this.author)) {
+      //搜索
+      if (this.author !== "") {
         this.suffix += "&author_uuid=" + this.author;
       }
       if (this.label !== "") {
@@ -140,18 +215,93 @@ export default {
       if (this.swi) {
         this.suffix += "&r18=true";
       }
-      this.imgshow = false;
       this.v2(this.suffix);
+      this.dibubianjie = this.suffix;
+      this.suffix = "/v2/?num=10"; //恢复初始
+    },
+    xinSubmit() {
+      //高级搜索
+      let yan = this.yange ? "&tag=" : "&keyword=";
+      this.dynamicTags.forEach((element) => {
+        this.suffix += yan + element;
+      });
+      if (this.swi) {
+        this.suffix += "&r18=true";
+      }
+      this.v2(this.suffix);
+      this.dibubianjie = this.suffix;
       this.suffix = "/v2/?num=10"; //恢复初始
     },
     txtcopy(i) {
-      this.$refs.intxt.value = i;
+      //快捷复制
+
+      if (this.iconb) {
+        if (!this.dynamicTags.includes(i)) {
+          this.dynamicTags.push(i);
+        } else {
+          this.$notify({
+            title: "提示",
+            message: "该关键字已存在",
+            type: "warning",
+            showClose: false,
+            offset: 60,
+          });
+        }
+      } else {
+        this.label = i;
+      }
+    },
+    xiaz() {
+      //单击高级
+      this.iconb = !this.iconb;
+      this.icon = this.iconb ? "el-icon-arrow-down" : "el-icon-arrow-up";
     },
     totop() {
+      //页面滚动
       window.scrollTo({
         top: 0,
         behavior: "smooth",
       });
+    },
+    //高级搜索的三个方法
+    handleClose(tag) {
+      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1); //关闭标签
+      //在dynamicTags中查找tag对应的index，删除一个
+    },
+    danjiClose(tag) {
+      //修改标签
+      this.inputValue = tag;
+      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1); //关闭标签
+      this.inputVisible = true;
+      this.$nextTick((_) => {
+        //等待dom更新完成后执行
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+
+    showInput() {
+      this.inputVisible = true;
+      this.$nextTick((_) => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+
+    handleInputConfirm() {
+      //在数组中新增
+      let inputValue = this.inputValue;
+      if (inputValue && !this.dynamicTags.includes(inputValue)) {
+        this.dynamicTags.push(inputValue);
+      } else if (inputValue) {
+        this.$notify({
+          title: "提示",
+          message: "该关键字已存在",
+          type: "warning",
+          showClose: false,
+          offset: 60,
+        });
+      }
+      this.inputVisible = false;
+      this.inputValue = "";
     },
   },
 };
@@ -170,7 +320,6 @@ export default {
   margin: 0;
   padding: 0;
 }
-
 .imginde {
   width: 60%;
   text-align: center;
@@ -184,13 +333,40 @@ export default {
   margin-bottom: 16px;
   border-radius: 12px;
 }
-.el-tag {
+.raico {
+  width: 90px;
+  position: fixed;
+  right: 0;
+  bottom: 10px;
+}
+.tag-cs {
   margin-right: 8px;
   margin-top: 6px;
+  cursor: alias;
+}
+.tag-cs:active {
+  background-color: #ccc;
+}
+.gaojidiv {
+  margin-bottom: 20px;
+}
+/* 高级 */
+.button-new-tag {
+  margin-left: 10px;
+  height: 32px;
+  line-height: 30px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.input-new-tag {
+  width: 114px;
+  height: 32px;
+  margin-left: 10px;
+  vertical-align: bottom;
 }
 
 .el-fade-in-linear-leave-active {
-  transition: all 0.8s;
+  transition: all 0.6s;
 }
 .el-fade-in-linear-enter-active {
   transition: all 0.4s;

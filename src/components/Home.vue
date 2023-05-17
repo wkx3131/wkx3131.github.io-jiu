@@ -1,4 +1,3 @@
-
 <template>
   <el-container class="home-container">
     <!-- 头部 -->
@@ -6,8 +5,8 @@
       <h2>&emsp;金岂的垃圾堆</h2>
       <!-- <h2>&emsp;管理系统</h2> -->
       <el-button type="info" @click="logout">退出</el-button>
-      </el-header>
-    
+    </el-header>
+
     <!-- 主体 -->
     <el-container>
       <!-- 侧边栏 根据缩进改变宽-->
@@ -54,19 +53,22 @@
       <!-- 主页面 -->
       <el-main ref="mainRef">
         <!-- 路由占位符 -->
-        <transition mode='out-in' name="left">
-        <router-view></router-view>
+        <transition mode="out-in" name="left">
+          <keep-alive>
+            <router-view></router-view>
+          </keep-alive>
         </transition>
       </el-main>
     </el-container>
-  </el-container>  <!-- 这里结构是正确的 -->
-
+  </el-container>
+  <!-- 这里结构是正确的 -->
 </template>
 
 <script>
 import { datas } from "../json/json-server/test2db.json";
 export default {
-  data() {       //data function(){}的简写，其实是个函数，vue里的data不能是对象，所以用函数html里的实时data:{}
+  data() {
+    //data function(){}的简写，其实是个函数，vue里的data不能是对象，所以用函数html里的实时data:{}
     return {
       //左侧菜单数据
       menulist: [],
@@ -97,7 +99,9 @@ export default {
     },
     toggleCollapse() {
       this.isCollapse = !this.isCollapse;
-      this.$refs.mainRef.$el.style.paddingLeft=this.isCollapse? "80px":"230px";
+      this.$refs.mainRef.$el.style.paddingLeft = this.isCollapse
+        ? "80px"
+        : "230px";
     },
     // 保持连接的激活状态
     saveNAvState(activePath) {
@@ -142,7 +146,7 @@ export default {
 }
 .el-aside {
   background-color: #333744;
-    position: fixed;
+  position: fixed;
   height: 100%;
   z-index: 98;
 }
@@ -161,16 +165,16 @@ export default {
 }
 
 /* 动画 */
-.left-enter{
+.left-enter {
   transform: translateX(-110%);
   /* 新页面 */
 }
-.left-leave-to{
-  transform:translateX(-110%);
+.left-leave-to {
+  transform: translateX(-110%);
   /* 旧页面 */
 }
 .left-enter-active,
-.left-leave-active{
-  transition: .5s;
+.left-leave-active {
+  transition: 0.5s;
 }
 </style>

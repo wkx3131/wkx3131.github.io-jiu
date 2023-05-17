@@ -15,6 +15,7 @@
 
       <el-form-item>
         <el-button type="primary" @click="book">查找</el-button>
+        <el-button type="info" @click="qingkong">重置</el-button>
       </el-form-item>
     </el-form>
     <el-radio v-model="radio" label="title">查找作品</el-radio>
@@ -140,7 +141,7 @@
             </el-option>
           </el-select>
           <div ref="txt" class="txtp">
-            <p v-for="value in texts" :key="value.pid">{{ value }}</p>
+            <p v-for="(value, index) in texts" :key="index">{{ value }}</p>
           </div>
           <!-- <div v-for="t in texts" :key="t.pid" v-html="t"></div> -->
           <el-button @click="mul()">返回目录</el-button>
@@ -275,7 +276,7 @@ export default {
       // console.log(b);
     },
     async text(b, p, e) {
-      //获取文本
+      //获取文本 $event
       let loading = this.$loading({
         text: "加载中...",
         spinner: "el-icon-loading",
@@ -322,6 +323,10 @@ export default {
       this.wenb = !this.wenb;
       this.muli = !this.muli;
       this.totop();
+    },
+    qingkong() {
+      //刷新页面
+      location.reload();
     },
     ry() {
       //黑白控制
@@ -472,7 +477,7 @@ export default {
   border: 2px solid #4022ff;
 }
 .vertical-slider /deep/ .el-slider__runway {
-  background-color: rgb(200, 0, 0);
+  background-color: #f91144;
 }
 
 /* 动画 */
