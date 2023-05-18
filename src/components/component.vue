@@ -31,7 +31,27 @@
         >
       </el-form-item>
       <el-switch v-model="swi" active-text="特殊" inactive-text="常规">
-      </el-switch>
+      </el-switch
+      ><br />
+      <el-tooltip
+        effect="dark"
+        content="如果图片加载失败较多请开启懒加载"
+        placement="right"
+        :enterable="false"
+      >
+        <el-checkbox v-model="lazy" border size="mini">懒加载</el-checkbox>
+      </el-tooltip>
+      <el-checkbox
+        v-model="r18"
+        true-label="R-18"
+        false-label="wkx"
+        border
+        size="mini"
+        >健康模式</el-checkbox
+      >
+      <!-- <el-checkbox v-model="jinak" @change="rr18" border size="small"
+        >健康模式</el-checkbox
+      > -->
     </el-form>
     <!--  -->
     <el-button type="text" :icon="icon" @click="xiaz()">高级搜索</el-button
@@ -76,7 +96,7 @@
     </transition>
 
     <!-- 卡片 -->
-    <transition-group name="el-fade-in-linear">
+    <transition-group name="el-fade-in-linear" v-if="zongz">
       <el-card
         class="box-card"
         v-for="(value, index) in data"
@@ -102,14 +122,25 @@
                   onerror="../json/合理.png"
                 /> -->
               <el-image
+                v-if="value.tags.indexOf(r18) === -1"
                 :src="value.url"
                 :preview-src-list="[value.url]"
-                lazy
+                :lazy="lazy"
                 fit="scale-down"
               >
-                <!-- <div slot="error" class="image-slot">
-                    <i class="el-icon-picture-outline"></i>
-                  </div> -->
+                <div slot="error" class="image-slot">
+                  <p></p>
+                  <i
+                    class="el-icon-picture-outline"
+                    style="font-size: 30px"
+                  ></i>
+                  <p>
+                    图片加载失败,可能是图片不存在或服务器加载负荷,<wbr />你可以尝试手动加载
+                  </p>
+                  <p>
+                    <a :href="value.url" target="_blank">{{ value.url }}</a>
+                  </p>
+                </div>
               </el-image>
             </td>
           </tr>
@@ -130,7 +161,7 @@
         <el-tooltip
           effect="dark"
           content="回到顶部"
-          placement="right"
+          placement="left"
           :enterable="false"
         >
           <el-button
@@ -143,14 +174,30 @@
         <el-tooltip
           effect="dark"
           content="刷新当前搜索"
-          placement="right"
+          placement="left"
           :enterable="false"
         >
           <el-button
+            class="en-button"
             type="primary"
             icon="el-icon-refresh"
             circle
             @click="v2(dibubianjie)"
+          ></el-button>
+        </el-tooltip>
+
+        <el-tooltip
+          effect="dark"
+          content="重新加载当前页面"
+          placement="left"
+          :enterable="false"
+        >
+          <el-button
+            class="e-button"
+            type="primary"
+            icon="el-icon-refresh-right"
+            circle
+            @click="congz()"
           ></el-button>
         </el-tooltip>
       </div>
@@ -162,6 +209,7 @@ export default {
   data() {
     return {
       na: "",
+      lazy: false,
       data: [], //图片数据
       suffix: "/v2/?num=10", //空搜索
       author: "",
@@ -175,11 +223,14 @@ export default {
       inputValue: "", //新值内容
       yange: false, //严格模式
       dibubianjie: "/v2/?num=10",
+      zongz: true, //图片重载
+      //jinak: false, //健康判断
+      r18: "wkx",
     };
   },
   created() {
     this.axi();
-    // this.v2(this.suffix);
+    this.v2(this.suffix);
   },
   methods: {
     async axi() {
@@ -256,6 +307,17 @@ export default {
       this.iconb = !this.iconb;
       this.icon = this.iconb ? "el-icon-arrow-down" : "el-icon-arrow-up";
     },
+    // rr18() {
+    //   //健康模式
+    //   this.r18 = this.jinak ? "R-18" : "wkx";
+    // },
+    congz() {
+      //重载图片
+      this.zongz = false;
+      setTimeout(() => {
+        this.zongz = true;
+      }, 500);
+    },
     totop() {
       //页面滚动
       window.scrollTo({
@@ -263,6 +325,7 @@ export default {
         behavior: "smooth",
       });
     },
+
     //高级搜索的三个方法
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1); //关闭标签
@@ -334,7 +397,7 @@ export default {
   border-radius: 12px;
 }
 .raico {
-  width: 90px;
+  width: 100px;
   position: fixed;
   right: 0;
   bottom: 10px;
@@ -349,6 +412,21 @@ export default {
 }
 .gaojidiv {
   margin-bottom: 20px;
+}
+.en-button:hover + .e-button {
+  top: -40px;
+  opacity: 1;
+}
+.e-button:hover {
+  top: -40px;
+  opacity: 1;
+}
+.e-button {
+  transition: all 0.3s linear;
+  position: absolute;
+  right: 10px;
+  top: 0;
+  opacity: 0;
 }
 /* 高级 */
 .button-new-tag {
