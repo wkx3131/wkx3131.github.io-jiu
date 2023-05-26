@@ -23,8 +23,8 @@ axios.interceptors.request.use(config=>{
 })
 Vue.prototype.$http = axios ////添加到原型，起名$http
 
-import VueLazyload from 'vue-lazyload'
-Vue.use(VueLazyload)
+// import VueLazyload from 'vue-lazyload'
+// Vue.use(VueLazyload)
 
 
 

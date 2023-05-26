@@ -106,7 +106,7 @@
         <div slot="header">
           <span>{{ index }}&emsp;{{ value.title }}</span>
         </div>
-        <table>
+        <table v-if="!value.tags.includes(r18)">
           <tr>
             <td class="informa">
               <b @click="author = value.author_uid">
@@ -115,14 +115,14 @@
               >
             </td>
             <td rowspan="2" class="imginde">
-              <!-- <img src="../json/合理.png"> -->
+              <!-- <img src="../json/合理.png" /> -->
               <!-- <img
                   v-lazy="value.url"
                   height="300px"
                   onerror="../json/合理.png"
                 /> -->
+              <!-- :src="require('@/json/合理.png')" -->
               <el-image
-                v-if="value.tags.indexOf(r18) === -1"
                 :src="value.url"
                 :preview-src-list="[value.url]"
                 :lazy="lazy"
@@ -156,6 +156,7 @@
             </td>
           </tr>
         </table>
+        <h2 v-else>内容已屏蔽</h2>
       </el-card>
       <div class="raico" v-show="imgshow" key="primary">
         <el-tooltip
@@ -171,6 +172,7 @@
             @click="totop()"
           ></el-button>
         </el-tooltip>
+
         <el-tooltip
           effect="dark"
           content="刷新当前搜索"
@@ -185,7 +187,6 @@
             @click="v2(dibubianjie)"
           ></el-button>
         </el-tooltip>
-
         <el-tooltip
           effect="dark"
           content="重新加载当前页面"
@@ -211,7 +212,7 @@ export default {
       na: "",
       lazy: false,
       data: [], //图片数据
-      suffix: "/v2/?num=10", //空搜索
+      suffix: "/v2/?num=8", //空搜索
       author: "",
       label: "",
       swi: false, //18
@@ -240,19 +241,29 @@ export default {
     },
     async v2(b) {
       this.imgshow = false;
-      const { data: arr } = await this.$http.get(b);
-      this.imgshow = true;
-      //    console.log(arr.data);
-      if (Array.isArray(arr.data)) {
-        this.data = arr.data;
-      } else {
-        this.data = [];
-        this.$notify.info({
-          title: "提示",
-          message: "该搜索无结果",
+      try {
+        const { data: arr } = await this.$http.get(b);
+        this.imgshow = true;
+        //    console.log(arr.data);
+        if (Array.isArray(arr.data)) {
+          this.data = arr.data;
+        } else {
+          this.data = [];
+          this.$notify.info({
+            title: "提示",
+            message: "该搜索无结果",
+            showClose: false,
+            offset: 60,
+          });
+        }
+      } catch (err) {
+        this.$notify.error({
+          title: "错误",
+          message: "服务器故障，请检查",
           showClose: false,
           offset: 60,
         });
+        console.log("故障代码", err);
       }
     },
     onSubmit() {
@@ -413,6 +424,10 @@ export default {
 .gaojidiv {
   margin-bottom: 20px;
 }
+.en-button {
+  position: absolute;
+  z-index: 2;
+}
 .en-button:hover + .e-button {
   top: -40px;
   opacity: 1;
@@ -423,7 +438,9 @@ export default {
 }
 .e-button {
   transition: all 0.3s linear;
+  transition-delay: 0.5s;
   position: absolute;
+  z-index: 1;
   right: 10px;
   top: 0;
   opacity: 0;

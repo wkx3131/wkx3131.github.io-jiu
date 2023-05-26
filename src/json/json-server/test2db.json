@@ -32,6 +32,11 @@
             "id": 5,
             "naclss": "小说",
             "path": "novel"
+          },
+          {
+            "id":65,
+            "naclss": "影视",
+            "path": "video"
           }
         ]
       }

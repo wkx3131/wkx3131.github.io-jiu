@@ -1,21 +1,20 @@
 <template>
   <div id="app">
     <!-- 条件 -->
-    <el-form :inline="true">
+    <el-form :inline="true" autocomplete="on">
       <el-form-item>
         <el-input
           placeholder=""
           v-model="content"
           clearable
           @keydown.enter.native.prevent="book"
-          autocomplete="on"
         >
         </el-input>
       </el-form-item>
 
       <el-form-item>
         <el-button type="primary" @click="book">查找</el-button>
-        <el-button type="info" @click="qingkong">重置</el-button>
+        <el-button type="info" @click="qingkong">重载文本</el-button>
       </el-form-item>
     </el-form>
     <el-radio v-model="radio" label="title">查找作品</el-radio>
@@ -137,6 +136,7 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
+              :disabled="item.disabled"
             >
             </el-option>
           </el-select>
@@ -144,8 +144,10 @@
             <p v-for="(value, index) in texts" :key="index">{{ value }}</p>
           </div>
           <!-- <div v-for="t in texts" :key="t.pid" v-html="t"></div> -->
-          <el-button @click="mul()">返回目录</el-button>
-          <el-button @click="next()">下一页</el-button>
+          <el-button-group>
+            <el-button @click="mul()">返回目录</el-button>
+            <el-button @click="next">下一页</el-button>
+          </el-button-group>
         </el-card>
       </transition>
       <!-- 字号 -->
@@ -191,6 +193,15 @@ export default {
       options: [
         { value: "bookform beijing", label: "关闭材质" },
         {
+          value: "bookform",
+          label: "五彩斑斓的黑",
+          disabled: true,
+        },
+        {
+          value: "bookform beijingd",
+          label: "朴素淡黄",
+        },
+        {
           value: "bookform beijingb",
           label: "褶皱白纸",
         },
@@ -231,29 +242,39 @@ export default {
   methods: {
     async book() {
       //获取书
-      let target = document.querySelector("#app");
+      // let target = document.querySelector("#app");
       let loading = this.$loading({
         text: "加载中...",
         spinner: "el-icon-loading",
         background: "rgba(0, 0, 0, 0.8)",
-        target: target,
+        // target: target,
       });
       this.showItems = false;
       this.wenb = false;
       this.muli = false;
-      const { data: book } = await this.$http.get(
-        "/xiao/fiction/search/" + this.radio + "/" + this.content + "/1/6"
-      );
-      if (book.msg == "成功") {
-        this.books = book.data;
-      } else {
-        this.$message({
-          message: book.msg,
-          type: "warning",
+      try {
+        const { data: book } = await this.$http.get(
+          "/xiao/fiction/search/" + this.radio + "/" + this.content + "/1/6"
+        );
+        if (book.msg == "成功") {
+          this.books = book.data;
+        } else {
+          this.$message({
+            message: book.msg,
+            duration: 5000,
+          });
+        }
+        loading.close();
+        this.showItems = true;
+        // console.log(book);
+      } catch (err) {
+        //网站访问失败
+        loading.close();
+        this.$message.error({
+          message: "502  服务器异常,请稍后再拨",
+          duration: 5000,
         });
       }
-      loading.close();
-      this.showItems = true;
     },
 
     async directory(b) {
@@ -307,16 +328,24 @@ export default {
         spinner: "el-icon-loading",
         background: "rgba(0, 0, 0, 0.8)",
       });
-      this.totop();
-      const { data: tes } = await this.$http.get(
-        "/xiao/fictionContent/search/" + this.nextid
-      );
-      loading.close();
-      this.texts = tes.data;
-      //  this.$refs.carRef.$el.classList = "rotate bookform"
-      this.p += 1;
-      this.nextid = this.directorys[this.p].chapterId;
-      console.log(this.p);
+      try {
+        const { data: tes } = await this.$http.get(
+          "/xiao/fictionContent/search/" + this.nextid
+        );
+        loading.close();
+        this.totop();
+        this.texts = tes.data;
+        //  this.$refs.carRef.$el.classList = "rotate bookform"
+        this.p += 1;
+        this.nextid = this.directorys[this.p].chapterId;
+        console.log(this.p);
+      } catch (err) {
+        loading.close();
+        this.$message.error({
+          message: "加载失败",
+          duration: 5000,
+        });
+      }
     },
     mul() {
       //返回目录
@@ -326,7 +355,10 @@ export default {
     },
     qingkong() {
       //刷新页面
-      location.reload();
+      this.ad = [...this.texts];
+      this.texts = [];
+      this.texts = this.ad;
+      // location.reload();刷新页面
     },
     ry() {
       //黑白控制
@@ -385,11 +417,12 @@ export default {
 }
 
 .bottom {
-  line-height: 20px;
+  line-height: 18px;
 }
 
 .button {
-  padding: 0;
+  font-size: 15px;
+  padding-top: 5px;
   float: right;
 }
 
@@ -446,6 +479,10 @@ export default {
 }
 .beijing {
   background: none;
+}
+.beijingd {
+  background: url(../json/680.jpg) center;
+  background-size: 100% auto;
 }
 .beijingb {
   background: url(../json/780.jpg) center;

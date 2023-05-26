@@ -7,6 +7,7 @@ import Users from '../components/Users.vue'
 import Right from '../components/Right.vue'
 import Component from '../components/component.vue'
 import novel from '../components/novel.vue'
+import video from '../components/video.vue'
 Vue.use(VueRouter)
 
 //Vue.component('now-time', NowTime)全局组件的写法
@@ -20,7 +21,8 @@ const routes = [
     {path: '/users', component: Users},
     {path: '/right', component: Right},
     {path: '/component', component: Component},
-    {path: '/novel', component: novel}
+    {path: '/novel', component: novel},
+    {path: '/video', component: video}
   ]
   },
 ]
