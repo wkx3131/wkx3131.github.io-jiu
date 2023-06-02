@@ -194,6 +194,7 @@ buttonContainer.onmouseup = (event) => {
 //let currentUrl = `${htop}api.yimian.xyz/img?type=head`;//小头像
 //let currentUrl = `https://api.likepoems.com/img/mc`;//胡桃
 const currentUrl =`https:/www.loliapi.com/acg/pp/?`;//精致头像
+randomImage.src = `https:/www.loliapi.com/acg/pp/`;
 const acg1_l = `https://www.loliapi.com/acg/?`; //api.vvhan.com/api/acgimg  api.gmit.vip/Api/DmImg?format=image
 const acg1_r = `https://t.lizi.moe/pc?`;
 const acg1_lh = `https://sex.nyan.xyz/api/v2/img?r18=true&`; 
@@ -345,7 +346,7 @@ function getRandomImage(url) {//链接
   randomImage.src = url+`t=${Date.now()}`;
   videoye.style.display="none";
 }
-getRandomImage(currentUrl)
+//getRandomImage(currentUrl)
 const isMobile = /Android|iPhone|Opera Mini/i.test(navigator.userAgent);
 // /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
 if (isMobile) {
