@@ -8,20 +8,19 @@
     <title>休息一下(网页版)金岂</title>
 </head>
 <body>
+  <span style="font-size: 12px;color: #9f9f9f;">反馈邮箱：sumo3131549989@163.com</span>
     <script>
-var [imgsize,htop,result] = [true,"https://","18认证"]
-//let currentUrl = `${htop}api.yimian.xyz/img?type=head`;//小头像
-//let currentUrl = `https://api.likepoems.com/img/mc`;//胡桃
-  let currentUrl ='https:/www.loliapi.com/acg/pp';//精致头像
+var [imgsize,result] = [true,"18认证"]
 const animeButton = document.createElement('button');
 const sceneryButton = document.createElement('button');
 const beautyButton = document.createElement('button');
 const cosButton = document.createElement('button');
 const videoButton = document.createElement('button');
-var Downloada = document.getElementById("Download");
-animeButton.innerText = 'ACG';
+const animeButton2 = document.createElement('button');
+animeButton.innerText = 'ACG1';
+animeButton2.innerText = 'ACG2';
 sceneryButton.innerText = '场景';
-beautyButton.innerText = '人';
+beautyButton.innerText = '三次元就是丑';
 cosButton.innerText = 'COS';
 videoButton.innerText = '视频';
 const R18input = document.createElement('input');//单选
@@ -32,7 +31,9 @@ R18input.checked = false;
 R18input.onchange = (event)=>{
   if (R18input.checked==true) {R18yes();}else{
     result="wkx";
-    animeButton.style.backgroundColor="#FFC0CB";cosButton.style.backgroundColor="#FFC0CB";
+    animeButton.style.backgroundColor="#FFC0CB";
+    animeButton2.style.backgroundColor="#FFC0CB";
+    cosButton.style.backgroundColor="#FFC0CB";
   }
     R18input.checked = false;
 }
@@ -46,10 +47,13 @@ righttxt.setAttribute("for", "youji");
 const randomImage = document.createElement('img');// 创建图片
 randomImage.style.width = "100%";
 randomImage.addEventListener("click", function(event) {
-  if(rightban.checked && result!="金岂"){//////
+  if(rightban.checked && result!="金岂"){
     result = prompt("恭喜你找到了真正的R18入口,请联系作者证明你已满18岁","金岂");
-      if(result=="金岂"){animeButton.style.backgroundColor="Gold";cosButton.style.backgroundColor="Gold";R18input.checked = true;}else{
-      animeButton.style.backgroundColor="#FFC0CB";cosButton.style.backgroundColor="#FFC0CB";R18input.checked = false;}
+      if(result=="金岂"){
+        animeButton.style.backgroundColor="Gold";
+        animeButton2.style.backgroundColor="Gold";
+        cosButton.style.backgroundColor="Gold";
+        R18input.checked = true;}
   }else{
     imgsize=!imgsize;
     buttonContainer.style.width =imgsize ? '90%' : '55%';
@@ -59,8 +63,15 @@ randomImage.addEventListener("contextmenu", function(event) {//右击
       event.preventDefault(); // 阻止默认事件，即不弹出上下文菜单
       if(result!="金岂"){/////
       result = prompt("恭喜你找到了真正的R18入口,请联系作者证明你已满18岁","金岂");
-      if(result=="金岂"){animeButton.style.backgroundColor="Gold";cosButton.style.backgroundColor="Gold";R18input.checked = true;}else{
-      animeButton.style.backgroundColor="#FFC0CB";cosButton.style.backgroundColor="#FFC0CB";R18input.checked = false;}}
+      if(result=="金岂"){
+        animeButton.style.backgroundColor="Gold";
+        animeButton2.style.backgroundColor="Gold";
+      cosButton.style.backgroundColor="Gold";
+      R18input.checked = true;}else{
+      animeButton.style.backgroundColor="#FFC0CB";
+      animeButton2.style.backgroundColor="#FFC0CB";
+      cosButton.style.backgroundColor="#FFC0CB";
+      R18input.checked = false;}}
     });
 
 const newDiv = document.createElement('div');//底部加载提示
@@ -125,6 +136,7 @@ const buttonStyle = `
   transition: background-color 2s ease-out;
 `;
 animeButton.style = buttonStyle;
+animeButton2.style = buttonStyle;
 sceneryButton.style = buttonStyle;
 beautyButton.style = buttonStyle;
 cosButton.style = buttonStyle;
@@ -179,95 +191,122 @@ buttonContainer.onmouseup = (event) => {
             button.style.filter = '';
     }
 };
+//let currentUrl = `${htop}api.yimian.xyz/img?type=head`;//小头像
+//let currentUrl = `https://api.likepoems.com/img/mc`;//胡桃
+const currentUrl ='https:/www.loliapi.com/acg/pp?';//精致头像
+const acg1_l = `https://www.loliapi.com/acg/?`; //api.vvhan.com/api/acgimg  api.gmit.vip/Api/DmImg?format=image
+const acg1_r = `https://t.lizi.moe/pc?`;
+const acg1_lh = `https://sex.nyan.xyz/api/v2/img?r18=true&`; 
+const acg1_rh = `https://image.anosu.top/pixiv/?db=1&r18=1&`;//jitsu的随机涩图
+const acg2_l = `https://t.lizi.moe/mp?`;
+const acg2_r = `https://t.mwm.moe/mp?`;
+// const acg2_r = `https://api.ghser.com/random/pe.php?`;
+const acg2_lh = `https://moe.anosu.top/img?sort=setu&`;//jitsu的随机涩图
+const acg2_rh = `https://image.anosu.top/pixiv/?db=0&r18=1&`;
+const scenery_l = `https://t.lizi.moe/fj?`;
+// const scenery_r = `https://api.asxe.vip/scenery.php?`;
+const scenery_r = `https://t.mwm.moe/fj?`;
+const beauty_l = `https://api.btstu.cn/sjbz/?`;
+const beauty_r = `https://api.btstu.cn/sjbz/api.php?`;
+const cos_l = `https://api.caonm.net/api/mnt/index.php?`;
+const cos_r = `https://api.vvhan.com/api/girl?`;
+const cos_lh = `https://api.caonm.net/api/bhs/b.php?`;
+const cos_rh = `https://api.caonm.net/api/bhs/h.php?`;
 // --
 animeButton.onclick = () => {
   if (rightban.checked){
     if(result=="金岂"){
-    currentUrl = `${htop}image.anosu.top/pixiv/?db=1&r18=1&t=${Date.now()}`
+      getRandomImage(acg1_rh);
   }else{
-currentUrl = `${htop}t.lizi.moe/pc?t=${Date.now()}`;
+    getRandomImage(acg1_r);
   }
   }else{
   if(result=="金岂"){
-    currentUrl = `${htop}sex.nyan.xyz/api/v2/img?r18=true&t=${Date.now()}`/////
-    // moe.anosu.top/img?sort=setu 备用
+    getRandomImage(acg1_lh);
   }else{
-    currentUrl = `${htop}www.loliapi.com/acg/?t=${Date.now()}`; // 使用二次元图片
-    //api.vvhan.com/api/acgimg
-    // api.gmit.vip/Api/DmImg?format=image
+    getRandomImage(acg1_l);
   }}
-  getRandomImage(currentUrl);
-  videoye.style.display="none";
 };
 animeButton.addEventListener("contextmenu", function(event) {//右击
       event.preventDefault();
       if(result=="金岂"){
-    currentUrl = `${htop}image.anosu.top/pixiv/?db=1&r18=1&t=${Date.now()}`
+      getRandomImage(acg1_rh);
   }else{
-currentUrl = `${htop}t.lizi.moe/pc?t=${Date.now()}`;
+    getRandomImage(acg1_r);
   }
-  getRandomImage(currentUrl);
-  videoye.style.display="none";
+    });
+animeButton2.onclick = () => {
+  if (rightban.checked){
+    if(result=="金岂"){
+      getRandomImage(acg2_rh);
+  }else{
+    getRandomImage(acg2_r);
+  }
+  }else{
+  if(result=="金岂"){
+    getRandomImage(acg2_lh);
+  }else{
+    getRandomImage(acg2_l);
+  }}
+};
+animeButton2.addEventListener("contextmenu", function(event) {//右击
+      event.preventDefault();
+      if(result=="金岂"){
+      getRandomImage(acg2_rh);
+  }else{
+    getRandomImage(acg2_r);
+  }
     });
 // --
 sceneryButton.onclick = () => {
   if(rightban.checked){
-    currentUrl = `${htop}api.asxe.vip/scenery.php?t=${Date.now()}`;
+    getRandomImage(scenery_r);
   }else{
-  currentUrl = `${htop}t.lizi.moe/fj?t=${Date.now()}`; // 使用风景图片
- } getRandomImage(currentUrl);
-  videoye.style.display="none";
+    getRandomImage(scenery_l);
+ }
 };
 sceneryButton.addEventListener("contextmenu", function(event) {//右击
       event.preventDefault();
-currentUrl = `${htop}api.asxe.vip/scenery.php?t=${Date.now()}`;//动漫风景
-  getRandomImage(currentUrl);
-  videoye.style.display="none";
+      getRandomImage(scenery_r);
     });
 // --
 beautyButton.onclick = () => {
   if(rightban.checked){
-    currentUrl = `${htop}api.btstu.cn/sjbz/api.php?t=${Date.now()}`;
+    getRandomImage(beauty_r);
   }
   else{
-    currentUrl = `${htop}api.btstu.cn/sjbz/?t=${Date.now()}`;}  
+    getRandomImage(beauty_l);
   //currentUrl = `${htop}cdn.seovx.com/?mom=302&t=${Date.now()}`;} // 使用仙女图片
-  getRandomImage(currentUrl);
-  videoye.style.display="none";
 };
 beautyButton.addEventListener("contextmenu", function(event) {//右击
       event.preventDefault();
-currentUrl = `${htop}api.btstu.cn/sjbz/api.php?t=${Date.now()}`;
-  getRandomImage(currentUrl);
-  videoye.style.display="none";
+      getRandomImage(beauty_r);
     });
+  }
 // --
 cosButton.onclick = () => {
   if(rightban.checked){
     if(result=="金岂"){
-    currentUrl = `${htop}api.caonm.net/api/bhs/h.php?t=${Date.now()}`
+      getRandomImage(cos_rh);
   }else{
-    currentUrl = `${htop}api.vvhan.com/api/girl?t=${Date.now()}`; // 使用cos图片
+    getRandomImage(cos_r);
   }
   }else{
   if(result=="金岂"){
-    currentUrl = `${htop}api.caonm.net/api/bhs/b.php?t=${Date.now()}`
+    getRandomImage(cos_lh);
   }else{
-    currentUrl = `${htop}api.caonm.net/api/mnt/index.php?t=${Date.now()}`;
+    getRandomImage(cos_l);
 
   }}
-  getRandomImage(currentUrl);
-  videoye.style.display="none";
 };
 cosButton.addEventListener("contextmenu", function(event) {//右击
       event.preventDefault();
       if(result=="金岂"){
-    currentUrl = `${htop}api.caonm.net/api/bhs/h.php?t=${Date.now()}`
+        getRandomImage(cos_rh);
   }else{
-    currentUrl = `${htop}api.vvhan.com/api/girl?t=${Date.now()}`; // 使用cos图片
+    getRandomImage(cos_r);
   }
-  getRandomImage(currentUrl);
-  videoye.style.display="none";
+  
     });
 // --
 videoButton.onclick = () => {
@@ -282,6 +321,7 @@ videoButton.addEventListener("contextmenu", function(event) {//右击
     });
 // 将按钮和图片添加到容器中
 buttonContainer.appendChild(animeButton);//动漫按钮
+buttonContainer.appendChild(animeButton2);//动漫按钮2
 buttonContainer.appendChild(sceneryButton);//风景按钮
 buttonContainer.appendChild(beautyButton);//仙女按钮
 buttonContainer.appendChild(cosButton);//COS按钮
@@ -302,7 +342,8 @@ if (result) {
 }}
 function getRandomImage(url) {//链接
     randomImage.src = "";
-  randomImage.src = url;
+  randomImage.src = url+`t=${Date.now()}`;
+  videoye.style.display="none";
 }
 getRandomImage(currentUrl)
 const isMobile = /Android|iPhone|Opera Mini/i.test(navigator.userAgent);
@@ -324,6 +365,13 @@ if (isMobile) {
         background-color: #e1e1e1;
         overflow-y: scroll;
       }
+      ::-webkit-scrollbar {
+  width: 0 !important;
+}
+::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0;
+}
     </style>
 </body>
 </html>
