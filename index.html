@@ -74,17 +74,13 @@ randomImage.addEventListener("click", function(event) {
 })
 randomImage.addEventListener("contextmenu", function(event) {//右击
       event.preventDefault(); // 阻止默认事件，即不弹出上下文菜单
-      if(result!="金岂"){/////
+      if(result!="金岂"){
       result = prompt("恭喜你找到了真正的R18入口,请联系作者证明你已满18岁","金岂");
       if(result=="金岂"){
         animeButton.style.backgroundColor="Gold";
         animeButton2.style.backgroundColor="Gold";
       cosButton.style.backgroundColor="Gold";
-      R18input.checked = true;}else{
-      animeButton.style.backgroundColor="#FFC0CB";
-      animeButton2.style.backgroundColor="#FFC0CB";
-      cosButton.style.backgroundColor="#FFC0CB";
-      R18input.checked = false;}}
+      R18input.checked = true;}}
     });
 
 const newDiv = document.createElement('div');//底部加载提示
@@ -94,7 +90,7 @@ top:70%;
 left:50%;
 transform:translateX(-50%);
 width:100px;
-z-index:1`
+z-index:1;`
 randomImage.onload = function() {
   newDiv.innerText="图片加载中..";
 };
@@ -120,7 +116,6 @@ position: relative;
   top: 20px;
   width: 90%;
   margin:auto;
-  margin-button: 0 auto 20px;///////
   height: auto;
   min-height:280px;
   background-color: #FFF;
@@ -128,10 +123,10 @@ position: relative;
   border-radius: 12px;
   padding: 15px;
   padding-top: 40px;
-  z-index: 9999;
+  z-index: 99;
   transition: all 0.8s ease-out;
   text-align: center;
-`;//#F5F5F5乳白色/////
+`;//#F5F5F5乳白色
 
 // 按钮通用样式
 const buttonStyle = `
@@ -337,7 +332,7 @@ cosButton.addEventListener("contextmenu", function(event) {//右击
     });
 // --
 videoButton.onclick = () => {
-  videoye.src=`https://api.qqsuu.cn/api/dm-xjj?type=video&t=${Date.now()}`;// 使用视频/////
+  videoye.src=`https://api.qqsuu.cn/api/dm-xjj?type=video&t=${Date.now()}`;// 使用视频
   videoye.style.display="block";
   randomImage.src = "";//精致头像
 };
