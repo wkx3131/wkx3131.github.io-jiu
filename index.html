@@ -65,6 +65,11 @@ randomImage.addEventListener("click", function(event) {
     buttonContainer.style.width =imgsize ? '30%' : '60%';}else{
       buttonContainer.style.width =imgsize ? '90%' : '55%';
     }
+    if(isMobile){
+      setTimeout(function() {
+        videoButton.style.display=imgsize?'':"none";
+        }, 300);
+    }
   }
 })
 randomImage.addEventListener("contextmenu", function(event) {//右击
@@ -334,8 +339,7 @@ cosButton.addEventListener("contextmenu", function(event) {//右击
 videoButton.onclick = () => {
   videoye.src=`https://api.qqsuu.cn/api/dm-xjj?type=video&t=${Date.now()}`;// 使用视频/////
   videoye.style.display="block";
-  currentUrl = ""
-  getRandomImage(currentUrl);
+  randomImage.src = "";//精致头像
 };
 videoButton.addEventListener("contextmenu", function(event) {//右击
       event.preventDefault();
