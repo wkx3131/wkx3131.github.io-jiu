@@ -8,8 +8,8 @@
     <title>休息一下(网页版)金岂®</title>
 </head>
 <body>
-  <span style="font-size: 12px;color: #9f9f9f;">反馈邮箱：sumo3131549989@163.com（不会没人用吧）&ensp;
-    <a href="./打钱.html" style="color: #9f9f9f;">给作者捐款</a></span>
+  <span style="font-size: 12px;color: #9f9f9f;">反馈邮箱：sumo3131549989@163.com&emsp;
+    <a href="./打钱.html" style="color: #9c9c9c;">给作者捐款</a></span>
     <script>
 var [imgsize,result] = [true,"18认证"]
 const animeButton = document.createElement('button');
@@ -159,7 +159,7 @@ randomImage.style.borderRadius = '10px';
 randomImage.style.transition="all 0.4s linear";
 randomImage.style.position = 'relative';
 randomImage.style.zIndex=10
-randomImage.alt = "图片加载失败,请等待作者修复(如果我没有摆烂)";
+randomImage.alt = "图片加载失败,请等待作者修复(如果作者没有摆烂)";
 // 18
 spans.style=`
 color: black;
@@ -371,7 +371,7 @@ function getRandomImage(url) {//链接
     randomImage.src = "";
   randomImage.src = url+`t=${Date.now()}`;
   videoye.style.display="none";
-  randomImage.alt = "图片加载失败,请等待作者修复(如果我没有摆烂)";
+  randomImage.alt = "图片加载失败,请等待作者修复(如果作者没有摆烂)";
 
 }
 const isMobile = /Android|iPhone|Opera Mini/i.test(navigator.userAgent);
